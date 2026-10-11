@@ -1,0 +1,598 @@
+/* =====================================
+   1. GLOBAL SETTINGS
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #070b1c;
+    --purple: #9b72ff;
+    --blue: #65aaff;
+    --pink: #e5a5ff;
+    --white: #f5f0ff;
+    --muted: #b9b4d2;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+
+/* =====================================
+   2. COSMIC BACKGROUND
+===================================== */
+
+.space-background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 20% 30%,
+        #29205b 0%, transparent 45%),
+        radial-gradient(ellipse at 80% 70%,
+        #172e61 0%, transparent 45%),
+        linear-gradient(135deg,
+        #070b1c, #11102e, #080d20);
+}
+
+.stars {
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        radial-gradient(2px 2px at 20% 30%,
+        white 50%, transparent 100%),
+        radial-gradient(2px 2px at 70% 20%,
+        white 50%, transparent 100%),
+        radial-gradient(1px 1px at 40% 80%,
+        white 50%, transparent 100%),
+        radial-gradient(2px 2px at 85% 65%,
+        white 50%, transparent 100%),
+        radial-gradient(1px 1px at 10% 90%,
+        white 50%, transparent 100%);
+
+    background-size: 300px 300px;
+    animation: twinkle 5s ease-in-out infinite alternate;
+}
+
+.nebula {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    top: 10%;
+    left: 20%;
+
+    background: radial-gradient(
+        circle,
+        rgba(128, 75, 255, 0.16),
+        rgba(62, 104, 255, 0.08),
+        transparent 70%
+    );
+
+    filter: blur(65px);
+    animation: nebulaFloat 12s ease-in-out infinite alternate;
+}
+
+.shooting-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.shooting-stars::before,
+.shooting-stars::after {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ffffff,
+        transparent
+    );
+    opacity: 0;
+    transform: rotate(-35deg);
+    animation: shootingStar 7s linear infinite;
+}
+
+.shooting-stars::before {
+    top: 25%;
+    left: 75%;
+}
+
+.shooting-stars::after {
+    top: 65%;
+    left: 30%;
+    animation-delay: 3.5s;
+}
+
+
+/* =====================================
+   3. ANIMATIONS
+===================================== */
+
+@keyframes twinkle {
+    from {
+        opacity: 0.4;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes nebulaFloat {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(50px, -30px) scale(1.15);
+    }
+}
+
+@keyframes shootingStar {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(-35deg);
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    35% {
+        opacity: 0;
+        transform: translate(-300px, 200px) rotate(-35deg);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #9b72ff;
+    }
+
+    to {
+        text-shadow: 0 0 25px #65aaff,
+                     0 0 40px #9b72ff;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes revealScale {
+    from {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* =====================================
+   4. SCREEN STRUCTURE
+===================================== */
+
+.screen {
+    display: none;
+    min-height: 100vh;
+    width: 100%;
+    padding: 80px 24px;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.screen.active {
+    display: flex;
+    animation: fadeIn 1s ease forwards;
+}
+
+.welcome-content,
+.countdown-content,
+.birthday-content,
+.section-content,
+.letter-content,
+.final-content {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+
+/* =====================================
+   5. TYPOGRAPHY
+===================================== */
+
+.eyebrow {
+    color: var(--pink);
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+h1 {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    line-height: 1.15;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+
+h1 span {
+    display: block;
+    background: linear-gradient(
+        90deg,
+        #a78bfa,
+        #75baff,
+        #e5a5ff
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 25px;
+    color: var(--white);
+}
+
+p {
+    line-height: 1.8;
+}
+
+.welcome-description,
+.section-description {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin: 0 auto 35px;
+}
+
+
+/* =====================================
+   6. BUTTONS
+===================================== */
+
+button {
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+
+    padding: 15px 30px;
+    border-radius: 50px;
+
+    color: white;
+
+    background: linear-gradient(
+        110deg,
+        #7955d9,
+        #477fda,
+        #a66ce8
+    );
+
+    box-shadow:
+        0 0 20px rgba(135, 100, 255, 0.3);
+
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 0 30px rgba(140, 110, 255, 0.6);
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+#enter-button {
+    margin-top: 15px;
+}
+
+
+/* =====================================
+   7. COUNTDOWN
+===================================== */
+
+.countdown-content h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+#countdown-number {
+    font-size: clamp(6rem, 20vw, 11rem);
+    font-weight: 900;
+
+    background: linear-gradient(
+        135deg,
+        #ffffff,
+        #ad8bff,
+        #65aaff
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+.countdown-content > p:last-child {
+    color: var(--muted);
+}
+
+
+/* =====================================
+   8. BIRTHDAY REVEAL
+===================================== */
+
+.birthday-content h1 {
+    animation: revealScale 1s ease;
+}
+
+.birthday-subtitle {
+    font-size: 1.4rem;
+    color: var(--pink);
+    margin-bottom: 20px;
+}
+
+.cake-container {
+    margin: 25px auto;
+}
+
+.cake-placeholder {
+    font-size: clamp(5rem, 15vw, 9rem);
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 25px rgba(177, 120, 255, 0.5));
+}
+
+.cosmic-message {
+    max-width: 550px;
+    margin: 20px auto 35px;
+    color: var(--muted);
+}
+
+
+/* =====================================
+   9. PHOTO GALLERY
+===================================== */
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+    max-width: 750px;
+    margin: 45px auto;
+}
+
+.photo-card {
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 8px;
+
+    color: #25213b;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.35);
+
+    transition: transform 0.4s ease,
+                box-shadow 0.4s ease;
+}
+
+.photo-card:nth-child(odd) {
+    transform: rotate(-3deg);
+}
+
+.photo-card:nth-child(even) {
+    transform: rotate(3deg);
+}
+
+.photo-card:hover {
+    transform: rotate(0deg) translateY(-10px) scale(1.04);
+
+    box-shadow:
+        0 15px 40px rgba(145, 105, 255, 0.35);
+}
+
+.photo-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    border-radius: 4px;
+}
+
+.photo-card p {
+    padding: 12px 5px 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+/* =====================================
+   10. BIRTHDAY LETTER
+===================================== */
+
+.letter-card {
+    max-width: 650px;
+    margin: 35px auto;
+    padding: 35px;
+
+    text-align: left;
+
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(187, 158, 255, 0.3);
+
+    border-radius: 20px;
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 0 35px rgba(120, 80, 255, 0.12);
+}
+
+.letter-card p {
+    margin-bottom: 20px;
+    color: #e3dcf8;
+}
+
+.letter-ending {
+    color: var(--pink) !important;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+
+/* =====================================
+   11. FINAL SURPRISE
+===================================== */
+
+.final-content h1 span {
+    display: block;
+}
+
+.final-content > p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    max-width: 550px;
+    margin: 25px auto;
+}
+
+.final-decoration {
+    font-size: 3rem;
+    margin: 35px 0;
+    animation: float 4s ease-in-out infinite;
+}
+
+.final-signature {
+    color: var(--pink) !important;
+}
+
+
+/* =====================================
+   12. MUSIC BUTTON
+===================================== */
+
+#music-toggle {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 10;
+
+    width: 50px;
+    height: 50px;
+    padding: 0;
+
+    border-radius: 50%;
+    font-size: 1.4rem;
+}
+
+
+/* =====================================
+   13. RESPONSIVE DESIGN
+===================================== */
+
+@media (max-width: 600px) {
+
+    .screen {
+        padding: 65px 20px;
+    }
+
+    .eyebrow {
+        font-size: 0.65rem;
+        letter-spacing: 2.5px;
+    }
+
+    h1 {
+        font-size: clamp(2.3rem, 11vw, 3.5rem);
+    }
+
+    .photo-gallery {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        max-width: 350px;
+    }
+
+    .letter-card {
+        padding: 25px 20px;
+    }
+
+    .welcome-description,
+    .section-description {
+        font-size: 0.95rem;
+    }
+
+    #music-toggle {
+        bottom: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
